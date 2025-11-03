@@ -5,11 +5,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
-# Для локальной разработки: DEBUG = True (по умолчанию)
-# Для продакшена: установите DEBUG = False или задайте DJANGO_DEBUG=false
-DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() == "true"
-# Для PythonAnywhere замените на ваш домен: ["yourusername.pythonanywhere.com"]
-ALLOWED_HOSTS: list[str] = ["*"]  # Для продакшена укажите конкретные домены
+DEBUG = True
+ALLOWED_HOSTS: list[str] = ["*"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -19,12 +16,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "lessons.apps.LessonsConfig",
-    'lessons',
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # Для раздачи статики в продакшене
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -70,15 +65,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
-
-# WhiteNoise настройки для статики
-# Используем более простой storage, который работает всегда
-if not DEBUG:
-    # В продакшене используем WhiteNoise с сжатием
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-else:
-    # В режиме разработки используем стандартное хранилище
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # Telegram bot config (provided by user)
 TELEGRAM_BOT_TOKEN = os.environ.get(

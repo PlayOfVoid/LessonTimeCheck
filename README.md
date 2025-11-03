@@ -39,17 +39,3 @@ $env:TELEGRAM_CHAT_ID = "1965639178"
 - Часовой пояс по умолчанию — `Europe/Moscow`. Вводится локальное время, далее приводится к aware datetime.
 - Флаги `notified_one_hour` и `notified_five_minutes` защищают от повторных отправок.
 
-## Деплой на PythonAnywhere
-
-Подробная инструкция по развертыванию на PythonAnywhere находится в файле `PYTHONANYWHERE_DEPLOY.md`.
-
-**Краткая версия:**
-1. Загрузите проект на PythonAnywhere
-2. Создайте виртуальное окружение и установите зависимости
-3. Выполните миграции: `python manage.py migrate`
-4. Соберите статику: `python manage.py collectstatic --noinput`
-5. Настройте WSGI файл (см. `pythonanywhere_wsgi.py`)
-6. Настройте статические файлы в панели PythonAnywhere
-7. Установите `DEBUG = False` и укажите ваш домен в `ALLOWED_HOSTS`
-8. Перезагрузите веб-приложение
-

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}LearnTimeCheck{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="/static/ico.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/ico.ico">
+    {% include 'lessons/themes.html' %}
+    {% include 'lessons/styles_common.html' %}
+</head>
+<body class="theme-{{ theme|default:'neon' }}">
+    {% if request.session.teacher_id %}
+    <nav class="top-navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <a href="{% url 'students_list' %}">📚 LearnTimeCheck</a>
+            </div>
+            <div class="navbar-actions">
+                <a href="{% url 'settings_page' %}" class="navbar-btn">⚙️ Настройки</a>
+                <a href="{% url 'logout' %}" class="navbar-btn navbar-btn-danger">🚪 Выйти</a>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+

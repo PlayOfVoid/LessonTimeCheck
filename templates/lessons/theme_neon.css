@@ -1,0 +1,78 @@
+/* Theme 1: Neon (текущая) */
+body.theme-neon {
+    font-family: 'Orbitron', 'Courier New', monospace;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+    color: #fff;
+}
+
+body.theme-neon::before {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+}
+
+body.theme-neon .card {
+    background: rgba(20, 20, 40, 0.7);
+    border: 2px solid rgba(138, 43, 226, 0.5);
+    box-shadow: 0 0 30px rgba(138, 43, 226, 0.3);
+}
+
+body.theme-neon .btn-primary {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+    color: #000;
+}
+
+body.theme-neon label,
+body.theme-neon .text-primary {
+    color: #00ffff;
+}
+
+body.theme-neon h1 {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-neon input,
+body.theme-neon textarea,
+body.theme-neon select {
+    background: rgba(10, 10, 20, 0.8);
+    border: 2px solid rgba(138, 43, 226, 0.6);
+    color: #fff;
+}
+
+body.theme-neon input:focus,
+body.theme-neon textarea:focus,
+body.theme-neon select:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+body.theme-neon .student-card {
+    background: rgba(20, 20, 40, 0.7);
+    border-color: rgba(138, 43, 226, 0.5);
+}
+
+body.theme-neon table {
+    background: rgba(20, 20, 40, 0.7);
+}
+
+body.theme-neon thead {
+    background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(0, 191, 255, 0.8));
+}
+
+body.theme-neon th {
+    color: #000;
+}
+
+body.theme-neon td {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+body.theme-neon .tabs {
+    border-bottom-color: rgba(138, 43, 226, 0.5);
+}
+

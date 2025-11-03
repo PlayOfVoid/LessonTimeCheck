@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django import forms
 
 from .models import Teacher, Student, Lesson
 
@@ -7,7 +6,8 @@ from .models import Teacher, Student, Lesson
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ("username", "telegram_chat_id", "created_at")
-    search_fields = ("username",)
+    search_fields = ("username", "telegram_chat_id")
+    list_filter = ("created_at",)
     fields = ("username", "password", "telegram_chat_id")
     
     def save_model(self, request, obj, form, change):
@@ -20,16 +20,19 @@ class TeacherAdmin(admin.ModelAdmin):
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ("name", "teacher", "created_at")
-    list_filter = ("teacher",)
+    list_filter = ("teacher", "created_at")
     search_fields = ("name",)
     fields = ("name", "teacher", "bio")
+    ordering = ("name",)
 
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ("student", "teacher", "start_time", "notified_one_hour", "notified_five_minutes")
-    list_filter = ("teacher", "notified_one_hour", "notified_five_minutes")
-    search_fields = ("student__name",)
-    ordering = ("start_time",)
+    list_display = ("student", "teacher", "start_time", "notified_one_hour", "notified_five_minutes", "created_at")
+    list_filter = ("teacher", "notified_one_hour", "notified_five_minutes", "start_time")
+    search_fields = ("student__name", "teacher__username")
+    ordering = ("-start_time",)
+    date_hierarchy = "start_time"
+    readonly_fields = ("created_at", "updated_at")
 
 

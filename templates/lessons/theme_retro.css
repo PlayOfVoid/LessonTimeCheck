@@ -1,0 +1,75 @@
+/* Theme 10: Retro */
+body.theme-retro {
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #ffe66d 100%);
+    color: #2d3436;
+}
+
+body.theme-retro::before {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.2) 0%, transparent 50%);
+}
+
+body.theme-retro .card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 4px solid #2d3436;
+    box-shadow: 8px 8px 0px rgba(45, 52, 54, 0.3);
+}
+
+body.theme-retro .btn-primary {
+    background: linear-gradient(45deg, #ff6b6b, #ffe66d);
+    box-shadow: 4px 4px 0px rgba(45, 52, 54, 0.3);
+    border: 3px solid #2d3436;
+    color: #2d3436;
+}
+
+body.theme-retro label,
+body.theme-retro .text-primary {
+    color: #4ecdc4;
+}
+
+body.theme-retro h1 {
+    color: #2d3436;
+    text-shadow: 3px 3px 0px rgba(255, 107, 107, 0.5);
+}
+
+body.theme-retro input,
+body.theme-retro textarea,
+body.theme-retro select {
+    background: rgba(255, 255, 255, 0.95);
+    border: 3px solid #2d3436;
+    color: #2d3436;
+}
+
+body.theme-retro .student-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 4px solid #2d3436;
+    color: #2d3436;
+}
+
+body.theme-retro table {
+    background: rgba(255, 255, 255, 0.9);
+    border: 4px solid #2d3436;
+}
+
+body.theme-retro thead {
+    background: linear-gradient(45deg, #ff6b6b, #ffe66d);
+}
+
+body.theme-retro th {
+    color: #2d3436;
+}
+
+body.theme-retro td {
+    color: #2d3436;
+}
+
+body.theme-retro .tabs {
+    border-bottom-color: #2d3436;
+    border-width: 4px;
+}
+
+body.theme-retro .tabs .tab {
+    color: #2d3436;
+}

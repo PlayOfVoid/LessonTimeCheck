@@ -1,0 +1,45 @@
+{% extends "lessons/base.html" %}
+{% load static %}
+
+{% block title %}Ученики{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="header-bar">
+        <h1>👥 Ученики</h1>
+    </div>
+
+    <div class="card">
+        <h2>➕ Добавить ученика</h2>
+        <form method="post" class="form-inline">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="error">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+
+    <div class="students-grid">
+        {% for student in students %}
+            <a href="{% url 'student_detail' student.id %}" class="student-card">
+                <h3>{{ student.name }}</h3>
+                {% if student.lessons.exists %}
+                    <p class="lessons-count">Занятий: {{ student.lessons.count }}</p>
+                {% else %}
+                    <p class="lessons-count empty">Нет занятий</p>
+                {% endif %}
+            </a>
+        {% empty %}
+            <div class="empty-state">
+                <p>Пока нет учеников. Добавьте первого!</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

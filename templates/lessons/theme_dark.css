@@ -1,0 +1,62 @@
+/* Theme 5: Dark */
+body.theme-dark {
+    font-family: 'Courier New', monospace;
+    background: #000000;
+    color: #ffffff;
+}
+
+body.theme-dark::before {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+body.theme-dark .card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+body.theme-dark .btn-primary {
+    background: linear-gradient(45deg, #333333, #666666);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+body.theme-dark label,
+body.theme-dark .text-primary {
+    color: #cccccc;
+}
+
+body.theme-dark h1 {
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+body.theme-dark input,
+body.theme-dark textarea,
+body.theme-dark select {
+    background: rgba(30, 30, 30, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+}
+
+body.theme-dark .student-card {
+    background: rgba(20, 20, 20, 0.9);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+body.theme-dark table {
+    background: rgba(20, 20, 20, 0.9);
+}
+
+body.theme-dark thead {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(200, 200, 200, 0.2));
+}
+
+body.theme-dark th {
+    color: #ffffff;
+}
+
+body.theme-dark .tabs {
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+}

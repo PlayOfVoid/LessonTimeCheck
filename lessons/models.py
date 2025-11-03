@@ -29,7 +29,7 @@ class Teacher(models.Model):
 
 
 class Student(models.Model):
-    name = models.CharField(max_length=255, help_text="Например: Армен(Ансар)")
+    name = models.CharField(max_length=255, help_text="Например: Тимофей(Юлия)")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='students')
     bio = models.TextField(blank=True, help_text="Markdown разметка поддерживается")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,7 +40,7 @@ class Student(models.Model):
         unique_together = [['name', 'teacher']]
 
     def __str__(self):
-        return f"{self.name} ({self.teacher.username})"
+        return self.name
 
 
 class Lesson(models.Model):

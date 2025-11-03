@@ -1,0 +1,80 @@
+/* Theme 9: Minimal */
+body.theme-minimal {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333333;
+}
+
+body.theme-minimal::before {
+    background: none;
+}
+
+body.theme-minimal .card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-minimal .btn-primary {
+    background: #2196f3;
+    box-shadow: 0 2px 5px rgba(33, 150, 243, 0.3);
+    color: white;
+}
+
+body.theme-minimal label,
+body.theme-minimal .text-primary {
+    color: #2196f3;
+}
+
+body.theme-minimal h1 {
+    color: #212121;
+}
+
+body.theme-minimal input,
+body.theme-minimal textarea,
+body.theme-minimal select {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #333333;
+}
+
+body.theme-minimal .student-card {
+    background: #ffffff;
+    border-color: #e0e0e0;
+    color: #333333;
+}
+
+body.theme-minimal table {
+    background: #ffffff;
+}
+
+body.theme-minimal th {
+    background: #f5f5f5;
+    color: #212121;
+}
+
+body.theme-minimal td {
+    color: #424242;
+}
+
+body.theme-minimal thead {
+    background: #f5f5f5;
+}
+
+body.theme-minimal .tabs {
+    border-bottom-color: #e0e0e0;
+}
+
+body.theme-minimal .tabs .tab {
+    color: #424242;
+}
+
+body.theme-minimal .badge.ok {
+    background: #4caf50;
+    color: #fff;
+}
+
+body.theme-minimal .badge.no {
+    background: #f44336;
+    color: #fff;
+}

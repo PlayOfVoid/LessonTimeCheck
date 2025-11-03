@@ -1,0 +1,61 @@
+/* Theme 7: Rose */
+body.theme-rose {
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #1a0a0a 0%, #4a1a2a 50%, #6a2a3a 100%);
+    color: #ffe6f0;
+}
+
+body.theme-rose::before {
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(236, 64, 122, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(244, 143, 177, 0.15) 0%, transparent 50%);
+}
+
+body.theme-rose .card {
+    background: rgba(74, 20, 40, 0.8);
+    border: 2px solid rgba(236, 64, 122, 0.6);
+    box-shadow: 0 0 30px rgba(236, 64, 122, 0.4);
+}
+
+body.theme-rose .btn-primary {
+    background: linear-gradient(45deg, #ec407a, #f48fb1);
+    box-shadow: 0 0 20px rgba(236, 64, 122, 0.6);
+    color: #fff;
+}
+
+body.theme-rose label,
+body.theme-rose .text-primary {
+    color: #f48fb1;
+}
+
+body.theme-rose h1 {
+    background: linear-gradient(45deg, #ec407a, #f48fb1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.theme-rose input,
+body.theme-rose textarea,
+body.theme-rose select {
+    background: rgba(50, 10, 25, 0.8);
+    border: 2px solid rgba(236, 64, 122, 0.6);
+    color: #ffe6f0;
+}
+
+body.theme-rose .student-card {
+    background: rgba(74, 20, 40, 0.8);
+    border-color: rgba(236, 64, 122, 0.6);
+}
+
+body.theme-rose table {
+    background: rgba(74, 20, 40, 0.8);
+}
+
+body.theme-rose thead {
+    background: linear-gradient(135deg, rgba(236, 64, 122, 0.8), rgba(244, 143, 177, 0.8));
+}
+
+body.theme-rose .tabs {
+    border-bottom-color: rgba(236, 64, 122, 0.6);
+}

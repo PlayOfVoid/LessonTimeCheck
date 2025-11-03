@@ -1,0 +1,200 @@
+{% extends "lessons/base.html" %}
+
+{% block title %}{{ student.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="header-bar">
+        <div>
+            <a href="{% url 'students_list' %}" class="btn btn-secondary" style="margin-bottom: 10px;">← Назад к ученикам</a>
+            <h1>{{ student.name }}</h1>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📅 Добавить занятие</h2>
+        <form method="post" class="form-inline">
+            {% csrf_token %}
+            <input type="hidden" name="add_lesson" value="1">
+            <div class="form-group" style="display: none;">
+                {{ lesson_form.student }}
+            </div>
+            <div class="form-group">
+                <label>⏰ Время занятия</label>
+                {{ lesson_form.start_time }}
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>📝 Биография</h2>
+        <button type="button" class="btn btn-primary" onclick="openBioModal()">📝 {{ student.bio|yesno:"Редактировать био,Добавить био" }}</button>
+        {% if student.bio %}
+            <button type="button" class="btn btn-secondary" onclick="openBioViewModal()" style="margin-left: 10px;">👁️ Просмотреть био</button>
+            <a href="{% url 'student_bio_pdf' student.id %}" class="btn btn-secondary" style="margin-left: 10px;">📥 Скачать PDF</a>
+        {% endif %}
+    </div>
+
+    <!-- Модальное окно для редактирования био -->
+    <div id="bioEditModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeBioModal()">&times;</span>
+            <h2>📝 Редактировать биографию</h2>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="save_bio" value="1">
+                <div class="form-group">
+                    {{ bio_form.bio }}
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeBioModal()">Отмена</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно для просмотра био -->
+    <div id="bioViewModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeBioViewModal()">&times;</span>
+            <h2>📝 Биография: {{ student.name }}</h2>
+            <div class="markdown-content">{{ bio_html|safe }}</div>
+            <div style="margin-top: 20px;">
+                <a href="{% url 'student_bio_pdf' student.id %}" class="btn btn-primary">📥 Скачать PDF</a>
+                <button type="button" class="btn btn-secondary" onclick="closeBioViewModal()" style="margin-left: 10px;">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📚 Занятия</h2>
+        {% if lessons %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>⏰ Время</th>
+                        <th>⏳ 1 час</th>
+                        <th>⚡ 5 минут</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lesson in lessons %}
+                        <tr>
+                            <td><strong>{{ lesson.start_time|date:"Y-m-d H:i" }}</strong></td>
+                            <td>
+                                {% if lesson.notified_one_hour %}
+                                    <span class="badge ok">✓ отправлено</span>
+                                {% else %}
+                                    <span class="badge no">✗ не отправлено</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if lesson.notified_five_minutes %}
+                                    <span class="badge ok">✓ отправлено</span>
+                                {% else %}
+                                    <span class="badge no">✗ не отправлено</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <p>Пока нет занятий</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: rgba(0, 0, 0, 0.9);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid;
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    transition: all 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff;
+    transform: scale(1.2);
+}
+</style>
+
+<script>
+function openBioModal() {
+    document.getElementById('bioEditModal').style.display = 'block';
+}
+
+function closeBioModal() {
+    document.getElementById('bioEditModal').style.display = 'none';
+}
+
+function openBioViewModal() {
+    document.getElementById('bioViewModal').style.display = 'block';
+}
+
+function closeBioViewModal() {
+    document.getElementById('bioViewModal').style.display = 'none';
+}
+
+// Закрытие модального окна при клике вне его
+window.onclick = function(event) {
+    const bioEditModal = document.getElementById('bioEditModal');
+    const bioViewModal = document.getElementById('bioViewModal');
+    if (event.target == bioEditModal) {
+        closeBioModal();
+    }
+    if (event.target == bioViewModal) {
+        closeBioViewModal();
+    }
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,8 @@
+Django==5.0.6
+pyTelegramBotAPI==4.23.0
+pytz==2024.1
+tzdata==2024.1
+markdown==3.6
+reportlab==4.2.0
+Pillow==10.4.0
+

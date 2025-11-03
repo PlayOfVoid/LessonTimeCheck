@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>✨ Занятия ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 30px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 191, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 20, 147, 0.1) 0%, transparent 50%);
+            animation: pulseBg 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        @keyframes pulseBg {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite, glow 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes glow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8))
+                        drop-shadow(0 0 40px rgba(0, 255, 255, 0.6));
+            }
+            50% { 
+                filter: drop-shadow(0 0 30px rgba(255, 0, 255, 1))
+                        drop-shadow(0 0 60px rgba(0, 255, 255, 0.8));
+            }
+        }
+        
+        form {
+            background: rgba(20, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(138, 43, 226, 0.5);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            box-shadow: 
+                0 0 30px rgba(138, 43, 226, 0.3),
+                inset 0 0 30px rgba(0, 191, 255, 0.1);
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes borderGlow {
+            0%, 100% { 
+                border-color: rgba(138, 43, 226, 0.5);
+                box-shadow: 
+                    0 0 30px rgba(138, 43, 226, 0.3),
+                    inset 0 0 30px rgba(0, 191, 255, 0.1);
+            }
+            50% { 
+                border-color: rgba(0, 191, 255, 0.8);
+                box-shadow: 
+                    0 0 50px rgba(138, 43, 226, 0.6),
+                    inset 0 0 40px rgba(0, 191, 255, 0.2);
+            }
+        }
+        
+        form > div {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-size: 14px;
+            color: #00ffff;
+            margin-bottom: 8px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+            animation: labelBlink 2s ease-in-out infinite;
+        }
+        
+        @keyframes labelBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        input[type="text"],
+        input[type="datetime-local"] {
+            padding: 12px 15px;
+            background: rgba(10, 10, 20, 0.8);
+            border: 2px solid rgba(138, 43, 226, 0.6);
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        input[type="text"]:focus,
+        input[type="datetime-local"]:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.6),
+                inset 0 0 20px rgba(138, 43, 226, 0.2);
+            animation: inputPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes inputPulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.6),
+                    inset 0 0 20px rgba(138, 43, 226, 0.2);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 30px rgba(0, 255, 255, 0.9),
+                    inset 0 0 25px rgba(138, 43, 226, 0.3);
+            }
+        }
+        
+        .muted {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 11px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            animation: buttonShimmer 2s linear infinite, buttonGlow 1.5s ease-in-out infinite;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 255, 0.6),
+                0 0 40px rgba(0, 255, 255, 0.4);
+            align-self: end;
+        }
+        
+        @keyframes buttonShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes buttonGlow {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 20px rgba(255, 0, 255, 0.6),
+                    0 0 40px rgba(0, 255, 255, 0.4);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 30px rgba(255, 0, 255, 0.9),
+                    0 0 60px rgba(0, 255, 255, 0.7);
+            }
+        }
+        
+        button:hover {
+            transform: scale(1.05) translateY(-2px);
+            animation: buttonShimmer 1s linear infinite, buttonGlow 0.8s ease-in-out infinite;
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: rgba(20, 20, 40, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 
+                0 0 40px rgba(138, 43, 226, 0.4),
+                inset 0 0 40px rgba(0, 191, 255, 0.1);
+        }
+        
+        thead {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(0, 191, 255, 0.8));
+        }
+        
+        th {
+            padding: 20px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: headerPulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes headerPulse {
+            0%, 100% { 
+                background: linear-gradient(135deg, rgba(138, 43, 226, 0.8), rgba(0, 191, 255, 0.8));
+            }
+            50% { 
+                background: linear-gradient(135deg, rgba(138, 43, 226, 1), rgba(0, 191, 255, 1));
+            }
+        }
+        
+        tbody tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.3);
+        }
+        
+        tbody tr:hover {
+            background: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+            transform: scale(1.01);
+        }
+        
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        td {
+            padding: 18px 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .badge.ok {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #000;
+            box-shadow: 
+                0 0 15px rgba(0, 255, 136, 0.6),
+                inset 0 0 10px rgba(0, 204, 102, 0.3);
+            animation: badgePulse 2s ease-in-out infinite, badgeGlowGreen 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes badgeGlowGreen {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 15px rgba(0, 255, 136, 0.6),
+                    inset 0 0 10px rgba(0, 204, 102, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 25px rgba(0, 255, 136, 0.9),
+                    inset 0 0 15px rgba(0, 204, 102, 0.5);
+            }
+        }
+        
+        .badge.no {
+            background: linear-gradient(135deg, #ff3366, #cc0033);
+            color: #fff;
+            box-shadow: 
+                0 0 15px rgba(255, 51, 102, 0.6),
+                inset 0 0 10px rgba(204, 0, 51, 0.3);
+            animation: badgePulse 2s ease-in-out infinite, badgeGlowRed 1.5s ease-in-out infinite, badgeBlink 1s ease-in-out infinite;
+        }
+        
+        @keyframes badgeGlowRed {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 15px rgba(255, 51, 102, 0.6),
+                    inset 0 0 10px rgba(204, 0, 51, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 25px rgba(255, 51, 102, 0.9),
+                    inset 0 0 15px rgba(204, 0, 51, 0.5);
+            }
+        }
+        
+        @keyframes badgeBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .muted {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            form {
+                grid-template-columns: 1fr;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 12px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Занятия ✨</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label>👤 Имя ученика</label>
+                {{ form.student_name }}
+            </div>
+            <div>
+                <label>📱 Telegram username</label>
+                {{ form.tg_username }}
+                <div class="muted">Можно без @</div>
+            </div>
+            <div>
+                <label>⏰ Время занятия</label>
+                {{ form.start_time }}
+                <div class="muted">Локальное время (таймзона: {{ TIME_ZONE|default:"Europe/Moscow" }})</div>
+            </div>
+            <div>
+                <button type="submit">➕ Добавить</button>
+            </div>
+        </form>
+
+        <table>
+            <thead>
+            <tr>
+                <th>👤 Имя</th>
+                <th>📱 Telegram</th>
+                <th>⏰ Время</th>
+                <th>⏳ 1 час</th>
+                <th>⚡ 5 минут</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lesson in lessons %}
+                <tr>
+                    <td><strong>{{ lesson.student_name }}</strong></td>
+                    <td>{{ lesson.tg_username }}</td>
+                    <td>{{ lesson.start_time|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        {% if lesson.notified_one_hour %}
+                            <span class="badge ok">✓ отправлено</span>
+                        {% else %}
+                            <span class="badge no">✗ не отправлено</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if lesson.notified_five_minutes %}
+                            <span class="badge ok">✓ отправлено</span>
+                        {% else %}
+                            <span class="badge no">✗ не отправлено</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="muted">Пока нет занятий</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+

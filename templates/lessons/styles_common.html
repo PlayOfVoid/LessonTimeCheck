@@ -32,6 +32,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .navbar-brand a {
@@ -46,13 +47,18 @@ body {
     transform: scale(1.05);
 }
 
-.navbar-actions {
+.navbar-right {
+    position: relative;
     display: flex;
-    gap: 15px;
     align-items: center;
 }
 
-.navbar-btn {
+/* Выпадающее меню настроек */
+.settings-dropdown {
+    position: relative;
+}
+
+.settings-btn {
     padding: 10px 20px;
     border-radius: 10px;
     text-decoration: none;
@@ -60,17 +66,153 @@ body {
     transition: all 0.3s ease;
     border: 2px solid;
     background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    white-space: nowrap;
 }
 
-.navbar-btn:hover {
+.settings-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.navbar-btn-danger {
-    background: rgba(255, 51, 102, 0.8);
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1001;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown-menu.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.1);
+    color: inherit;
+    text-align: left;
+    display: block;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
+    border-color: currentColor;
+}
+
+.dropdown-item-danger {
+    background: rgba(255, 51, 102, 0.3);
+    color: #ff3366;
+}
+
+.dropdown-item-danger:hover {
+    background: rgba(255, 51, 102, 0.5);
     color: #fff;
-    border-color: rgba(255, 51, 102, 0.8);
+}
+
+/* Затемнение фона при открытом меню */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.menu-overlay.active {
+    display: block;
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Адаптивность выпадающего меню */
+@media (max-width: 768px) {
+    .dropdown-menu {
+        position: fixed;
+        top: auto;
+        right: 15px;
+        left: 15px;
+        width: auto;
+        min-width: auto;
+        max-width: 300px;
+        margin: 0 auto;
+        bottom: 20px;
+        top: auto;
+    }
+
+    .navbar-brand {
+        font-size: 1.2em;
+    }
+
+    .navbar-container {
+        padding: 0 15px;
+    }
+
+    .settings-btn {
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 428px) {
+    .dropdown-menu {
+        right: 10px;
+        left: 10px;
+        max-width: calc(100% - 20px);
+        bottom: 15px;
+    }
+
+    .dropdown-item {
+        padding: 14px 18px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 375px) {
+    .navbar-brand a {
+        font-size: 1em;
+    }
+    
+    .dropdown-menu {
+        right: 5px;
+        left: 5px;
+        bottom: 10px;
+        padding: 8px;
+    }
+
+    .dropdown-item {
+        padding: 12px 15px;
+        font-size: 0.95em;
+    }
 }
 
 .main-content {
@@ -190,6 +332,10 @@ select:focus {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3);
+    touch-action: manipulation;
+    user-select: none;
+    min-height: 44px; /* Минимальный размер для удобного нажатия на мобильных */
 }
 
 .btn:hover {
@@ -460,6 +606,23 @@ td {
     text-decoration: underline;
 }
 
+/* Планшеты (iPad, iPad Pro) */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .students-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+    .theme-selector {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+/* Планшеты (маленькие) и большие телефоны */
 @media (max-width: 768px) {
     h1 {
         font-size: 2em;
@@ -468,14 +631,417 @@ td {
     .header-bar {
         flex-direction: column;
         align-items: stretch;
+        gap: 15px;
     }
     
     .form-inline {
         flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-inline .form-group {
+        width: 100%;
     }
     
     .students-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .main-content {
+        padding: 20px 15px;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    .card {
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .tab {
+        padding: 10px 16px;
+        font-size: 0.95em;
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .theme-selector {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+    }
+
+    table {
+        font-size: 0.9em;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    th, td {
+        padding: 12px 10px;
+        white-space: nowrap;
+    }
+
+    .navbar-container {
+        padding: 0 15px;
+    }
+
+    .settings-btn {
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+
+    .dropdown-menu {
+        min-width: 180px;
+    }
+}
+
+/* iPhone 13 Pro Max, 14 Plus (428px) и похожие */
+@media (max-width: 428px) {
+    .main-content {
+        padding: 15px 10px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    h3 {
+        font-size: 1.2em;
+    }
+
+    .card {
+        padding: 18px;
+        margin-bottom: 18px;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 15px;
+        width: 100%;
+    }
+
+    .form-inline .btn {
+        width: 100%;
+    }
+
+    .students-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .student-card {
+        padding: 18px;
+    }
+
+    .theme-selector {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .theme-option {
+        padding: 15px;
+    }
+
+    .tabs {
+        gap: 5px;
+    }
+
+    .tab {
+        padding: 8px 12px;
+        font-size: 0.85em;
+        min-width: auto;
+    }
+
+    table {
+        font-size: 0.85em;
+    }
+
+    th, td {
+        padding: 10px 6px;
+        font-size: 0.85em;
+    }
+
+    .navbar-brand a {
+        font-size: 1.2em;
+    }
+
+    .dropdown-menu {
+        right: 10px;
+        left: 10px;
+        width: auto;
+        min-width: auto;
+    }
+
+    input[type="text"],
+    input[type="datetime-local"],
+    input[type="password"],
+    textarea,
+    select {
+        font-size: 16px; /* Предотвращает авто-зум на iOS */
+    }
+}
+
+/* iPhone 13, 13 Pro, 12, 12 Pro (390px) */
+@media (max-width: 390px) {
+    .main-content {
+        padding: 12px 8px;
+    }
+
+    h1 {
+        font-size: 1.6em;
+    }
+
+    h2 {
+        font-size: 1.3em;
+    }
+
+    .card {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .btn {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+    .students-grid {
+        gap: 10px;
+    }
+
+    .student-card {
+        padding: 15px;
+    }
+
+    .theme-selector {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .theme-option {
+        padding: 12px 8px;
+        font-size: 0.9em;
+    }
+
+    .tab {
+        padding: 7px 10px;
+        font-size: 0.8em;
+    }
+
+    .navbar-brand a {
+        font-size: 1.1em;
+    }
+
+    .dropdown-menu {
+        right: 5px;
+        left: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    textarea {
+        min-height: 150px;
+    }
+}
+
+/* iPhone SE и маленькие устройства (375px и меньше) */
+@media (max-width: 375px) {
+    .main-content {
+        padding: 10px 5px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.25em;
+        margin-bottom: 12px;
+    }
+
+    .card {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .students-grid {
+        gap: 8px;
+    }
+
+    .student-card {
+        padding: 12px;
+    }
+
+    .student-card h3 {
+        font-size: 1.1em;
+    }
+
+    .theme-selector {
+        gap: 6px;
+    }
+
+    .theme-option {
+        padding: 10px 6px;
+        font-size: 0.85em;
+    }
+
+    .tabs {
+        gap: 4px;
+    }
+
+    .tab {
+        padding: 6px 8px;
+        font-size: 0.75em;
+    }
+
+    table {
+        font-size: 0.75em;
+    }
+
+    th, td {
+        padding: 8px 4px;
+    }
+
+    .navbar-container {
+        padding: 0 10px;
+    }
+
+    .navbar-brand a {
+        font-size: 1em;
+    }
+
+    .settings-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+
+    .dropdown-menu {
+        padding: 8px;
+    }
+
+    .dropdown-item {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    input[type="text"],
+    input[type="datetime-local"],
+    input[type="password"],
+    textarea,
+    select {
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+}
+
+/* Очень маленькие устройства (320px и меньше) */
+@media (max-width: 320px) {
+    .main-content {
+        padding: 8px 4px;
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    .btn {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .theme-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar-brand a {
+        font-size: 0.9em;
+    }
+}
+
+/* Ландшафтная ориентация для телефонов */
+@media (max-width: 896px) and (orientation: landscape) {
+    .main-content {
+        padding: 15px 20px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .students-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .theme-selector {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+}
+
+/* Большие экраны (4K и выше) */
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1600px;
+    }
+
+    .students-grid {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 25px;
+    }
+
+    .card {
+        padding: 40px;
+    }
+
+    h1 {
+        font-size: 3.5em;
+    }
+
+    h2 {
+        font-size: 2.2em;
     }
 }
 </style>

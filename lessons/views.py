@@ -321,7 +321,7 @@ def settings_page(request):
     if not teacher:
         return redirect('teacher_login')
     
-    tab = request.GET.get('tab', 'account')
+    tab = request.GET.get('tab', 'themes')
     
     # Обработка смены темы
     if request.method == "POST" and 'change_theme' in request.POST:

@@ -16,9 +16,17 @@
             <div class="navbar-brand">
                 <a href="{% url 'students_list' %}">📚 LearnTimeCheck</a>
             </div>
-            <div class="navbar-actions">
-                <a href="{% url 'settings_page' %}" class="navbar-btn">⚙️ Настройки</a>
-                <a href="{% url 'logout' %}" class="navbar-btn navbar-btn-danger">🚪 Выйти</a>
+            <div class="navbar-right">
+                <div class="settings-dropdown">
+                    <button class="settings-btn" onclick="toggleSettingsMenu()" aria-label="Настройки">
+                        ⚙️ Настройки
+                    </button>
+                    <div class="dropdown-menu" id="settingsDropdown">
+                        <a href="{% url 'settings_page' %}?tab=themes" class="dropdown-item">🎨 Настройки</a>
+                        <a href="{% url 'settings_page' %}?tab=account" class="dropdown-item">👤 Аккаунт</a>
+                    </div>
+                </div>
+                <div class="menu-overlay" id="menuOverlay" onclick="toggleSettingsMenu()"></div>
             </div>
         </div>
     </nav>
@@ -26,6 +34,58 @@
     <div class="main-content">
         {% block content %}{% endblock %}
     </div>
+
+<script>
+function toggleSettingsMenu() {
+    const dropdown = document.getElementById('settingsDropdown');
+    const overlay = document.getElementById('menuOverlay');
+    
+    dropdown.classList.toggle('active');
+    
+    if (window.innerWidth <= 768) {
+        if (overlay) {
+            overlay.classList.toggle('active');
+        }
+    }
+}
+
+// Закрытие меню при клике на затемнение
+document.getElementById('menuOverlay')?.addEventListener('click', function() {
+    toggleSettingsMenu();
+});
+
+// Закрытие меню при клике на пункт меню
+document.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', function() {
+        const dropdown = document.getElementById('settingsDropdown');
+        const overlay = document.getElementById('menuOverlay');
+        
+        setTimeout(() => {
+            dropdown.classList.remove('active');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }, 100);
+    });
+});
+
+// Закрытие меню при клике вне его
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('settingsDropdown');
+    const settingsBtn = document.querySelector('.settings-btn');
+    const overlay = document.getElementById('menuOverlay');
+    const settingsDropdown = document.querySelector('.settings-dropdown');
+    
+    if (dropdown && dropdown.classList.contains('active')) {
+        if (!settingsDropdown.contains(event.target)) {
+            dropdown.classList.remove('active');
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+        }
+    }
+});
+</script>
 </body>
 </html>
 

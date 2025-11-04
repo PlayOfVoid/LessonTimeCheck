@@ -13,7 +13,7 @@
     </div>
 
     <div class="tabs">
-        <a href="?tab=themes" class="tab {% if active_tab == 'themes' %}active{% endif %}">🎨 Темы</a>
+        <a href="?tab=themes" class="tab {% if active_tab == 'themes' %}active{% endif %}">🎨 Настройки</a>
         <a href="?tab=account" class="tab {% if active_tab == 'account' %}active{% endif %}">👤 Аккаунт</a>
         <a href="?tab=about" class="tab {% if active_tab == 'about' %}active{% endif %}">ℹ️ О проекте</a>
     </div>
@@ -136,8 +136,14 @@
         <div class="card">
             <h2>🤖 Telegram бот</h2>
             <p>Наш Telegram бот поможет вам получать уведомления о занятиях.</p>
-            <a href="https://t.me/your_bot_username" target="_blank" class="btn btn-primary" style="margin-top: 15px;">Открыть бота</a>
+            <a href="https://t.me/learnTimeMy_bot" target="_blank" class="btn btn-primary" style="margin-top: 15px;">Открыть бота</a>
             <p style="margin-top: 10px; opacity: 0.7; font-size: 0.9em;">Укажите username вашего бота в настройках проекта</p>
+        </div>
+        
+        <div class="card">
+            <h2>🚪 Выход</h2>
+            <p>Выйти из аккаунта</p>
+            <a href="{% url 'logout' %}" class="btn btn-danger" style="margin-top: 15px;">🚪 Выйти</a>
         </div>
     {% elif active_tab == 'about' %}
         <div class="card">

@@ -30,17 +30,19 @@
 
     <div class="card">
         <h2>📝 Биография</h2>
-        <button type="button" class="btn btn-primary" onclick="openBioModal()">📝 {{ student.bio|yesno:"Редактировать био,Добавить био" }}</button>
-        {% if student.bio %}
-            <button type="button" class="btn btn-secondary" onclick="openBioViewModal()" style="margin-left: 10px;">👁️ Просмотреть био</button>
-            <a href="{% url 'student_bio_pdf' student.id %}" class="btn btn-secondary" style="margin-left: 10px;">📥 Скачать PDF</a>
-        {% endif %}
+        <div class="bio-buttons">
+            <button type="button" class="btn btn-primary" onclick="openBioModal()">📝 {{ student.bio|yesno:"Редактировать био,Добавить био" }}</button>
+            {% if student.bio %}
+                <button type="button" class="btn btn-secondary" onclick="openBioViewModal()">👁️ Просмотреть био</button>
+                <a href="{% url 'student_bio_pdf' student.id %}" class="btn btn-secondary">📥 Скачать PDF</a>
+            {% endif %}
+        </div>
     </div>
 
     <!-- Модальное окно для редактирования био -->
     <div id="bioEditModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close" onclick="closeBioModal()">&times;</span>
+            <span class="close" onclick="closeBioModal()" aria-label="Закрыть">&times;</span>
             <h2>📝 Редактировать биографию</h2>
             <form method="post">
                 {% csrf_token %}
@@ -48,7 +50,7 @@
                 <div class="form-group">
                     {{ bio_form.bio }}
                 </div>
-                <div style="display: flex; gap: 10px;">
+                <div class="modal-buttons">
                     <button type="submit" class="btn btn-primary">💾 Сохранить</button>
                     <button type="button" class="btn btn-secondary" onclick="closeBioModal()">Отмена</button>
                 </div>
@@ -59,12 +61,12 @@
     <!-- Модальное окно для просмотра био -->
     <div id="bioViewModal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close" onclick="closeBioViewModal()">&times;</span>
+            <span class="close" onclick="closeBioViewModal()" aria-label="Закрыть">&times;</span>
             <h2>📝 Биография: {{ student.name }}</h2>
             <div class="markdown-content">{{ bio_html|safe }}</div>
-            <div style="margin-top: 20px;">
+            <div class="modal-buttons" style="margin-top: 20px;">
                 <a href="{% url 'student_bio_pdf' student.id %}" class="btn btn-primary">📥 Скачать PDF</a>
-                <button type="button" class="btn btn-secondary" onclick="closeBioViewModal()" style="margin-left: 10px;">Закрыть</button>
+                <button type="button" class="btn btn-secondary" onclick="closeBioViewModal()">Закрыть</button>
             </div>
         </div>
     </div>
@@ -111,22 +113,44 @@
 </div>
 
 <style>
+/* Кнопки био */
+.bio-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.bio-buttons .btn {
+    flex: 1;
+    min-width: 150px;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.3);
+    touch-action: manipulation;
+    cursor: pointer;
+}
+
 /* Модальное окно */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 2000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(5px);
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation;
+}
+
+.modal.active {
+    display: block;
 }
 
 .modal-content {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.95);
     margin: 5% auto;
     padding: 30px;
     border-radius: 20px;
@@ -135,6 +159,10 @@
     max-width: 800px;
     position: relative;
     animation: modalSlideIn 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
 }
 
 @keyframes modalSlideIn {
@@ -158,6 +186,14 @@
     right: 20px;
     top: 15px;
     transition: all 0.3s ease;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .close:hover,
@@ -165,36 +201,165 @@
     color: #fff;
     transform: scale(1.2);
 }
+
+.close:active {
+    transform: scale(1.1);
+}
+
+/* Адаптивность модальных окон */
+@media (max-width: 768px) {
+    .bio-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bio-buttons .btn {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .modal-content {
+        margin: 10% auto;
+        padding: 20px;
+        width: 95%;
+        max-height: 85vh;
+        border-radius: 15px;
+    }
+
+    .close {
+        font-size: 26px;
+        right: 15px;
+        top: 10px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 428px) {
+    .modal {
+        z-index: 2000;
+    }
+
+    .modal-content {
+        margin: 5% auto;
+        padding: 15px;
+        width: 98%;
+        max-height: 90vh;
+        border-radius: 12px;
+    }
+
+    .close {
+        font-size: 24px;
+        right: 10px;
+        top: 8px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.3em;
+        padding-right: 40px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 375px) {
+    .modal-content {
+        padding: 12px;
+        margin: 2% auto;
+        width: 98%;
+    }
+
+    .close {
+        font-size: 22px;
+        right: 8px;
+        top: 5px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.2em;
+        padding-right: 35px;
+    }
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 428px) {
+    .modal-buttons {
+        flex-direction: column;
+    }
+
+    .modal-buttons .btn {
+        width: 100%;
+    }
+}
 </style>
 
 <script>
 function openBioModal() {
-    document.getElementById('bioEditModal').style.display = 'block';
+    const modal = document.getElementById('bioEditModal');
+    modal.style.display = 'block';
+    modal.classList.add('active');
+    // Предотвращаем скролл фона
+    document.body.style.overflow = 'hidden';
 }
 
 function closeBioModal() {
-    document.getElementById('bioEditModal').style.display = 'none';
+    const modal = document.getElementById('bioEditModal');
+    modal.style.display = 'none';
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 function openBioViewModal() {
-    document.getElementById('bioViewModal').style.display = 'block';
+    const modal = document.getElementById('bioViewModal');
+    if (modal) {
+        modal.style.display = 'block';
+        modal.classList.add('active');
+        // Предотвращаем скролл фона
+        document.body.style.overflow = 'hidden';
+        // Фокус на модальном окне для доступности
+        modal.setAttribute('tabindex', '-1');
+        modal.focus();
+    }
 }
 
 function closeBioViewModal() {
-    document.getElementById('bioViewModal').style.display = 'none';
+    const modal = document.getElementById('bioViewModal');
+    modal.style.display = 'none';
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 // Закрытие модального окна при клике вне его
-window.onclick = function(event) {
+document.addEventListener('click', function(event) {
     const bioEditModal = document.getElementById('bioEditModal');
     const bioViewModal = document.getElementById('bioViewModal');
+    
     if (event.target == bioEditModal) {
         closeBioModal();
     }
     if (event.target == bioViewModal) {
         closeBioViewModal();
     }
-}
+});
+
+// Закрытие по Escape
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeBioModal();
+        closeBioViewModal();
+    }
+});
+
+// Улучшенная обработка для мобильных устройств - убираем обработчик touchstart, он может мешать
+// Используем стандартный click, который работает на всех устройствах
 </script>
 {% endblock %}
 

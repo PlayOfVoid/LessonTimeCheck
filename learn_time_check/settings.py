@@ -67,10 +67,17 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 
 # Telegram bot config (provided by user)
+# Токен открыт и доступен для продакшена
 TELEGRAM_BOT_TOKEN = os.environ.get(
     "TELEGRAM_BOT_TOKEN",
     "8424624364:AAH-KTrV5T4hc6XwYFMljPASfa3NRt5Zrhs",
 )
 TELEGRAM_CHAT_ID = int(os.environ.get("TELEGRAM_CHAT_ID", "1965639178"))
+
+# Проверка при запуске
+if not TELEGRAM_BOT_TOKEN:
+    print("[WARNING] TELEGRAM_BOT_TOKEN не установлен!")
+else:
+    print(f"[INFO] Telegram бот токен установлен: {TELEGRAM_BOT_TOKEN[:10]}...")
 
 
